@@ -1,6 +1,6 @@
 import express from "express";
 import morgan from "morgan";
-// import cors from "cors";
+import cors from "cors";
 
 // Import the routes
 import postRouter from "./routes/posts.js";
@@ -9,13 +9,15 @@ import postRouter from "./routes/posts.js";
 // Initialize our express app
 const app = express();
 
+app.use(cors());
+
 // Use morgan (third party middle)
 app.use(morgan("dev"));
 
 // Tell express to serve static files
 app.use(express.static("public"));
 app.use(express.json());
-// app.use(cors());
+app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/posts", postRouter);
 // app.use("/api/comments", commentsRouter);
@@ -27,5 +29,3 @@ app.listen(PORT, function () {
 });
 
 export default app;
-
-
